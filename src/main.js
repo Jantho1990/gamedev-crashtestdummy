@@ -2,7 +2,7 @@ import pop from '../pop'
 const { Game, KeyControls, entity, math, Text } = pop
 import GameScreen from './GameScreen'
 
-const game = new Game(800, 150)
+const game = new Game(800, 460)
 const keys = new KeyControls()
 
 function startGame() {
