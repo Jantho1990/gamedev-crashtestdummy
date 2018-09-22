@@ -30,16 +30,12 @@ class CrashTestDummy extends TileSprite {
       )
     }
 
-    const friction = vel.clone()
-      .multiply(-1)
-      .normalize()
-      .multiply(200)
+    physics.applyFriction(this, 100);
+    
     const gravity = { x: 0, y: 500 }
-
-    physics.applyForce(this, friction)
     physics.applyForce(this, gravity)
-
-    physics.integrate(this, dt)
+    
+    physics.integratePos(this, dt);
 
     // Bounce off the walls
     if (pos.x < 0 || pos.x > bounds.w - w) {
