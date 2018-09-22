@@ -4,6 +4,13 @@ function applyForce(e, force) {
   acc.y += force.y / mass
 }
 
+function applyImpulse(e, force, dt) {
+  applyForce(e, {
+    x: force.x / dt,
+    y: force.y / dt
+  })
+}
+
 function integrate(e, dt) {
   const { pos, vel, acc } = e
   const vx = vel.x + acc.x * dt

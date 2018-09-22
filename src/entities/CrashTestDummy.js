@@ -7,13 +7,15 @@ import physics from '../../pop/utils/physics'
 const texture = new Texture('res/img/crash_test.png')
 
 class CrashTestDummy extends TileSprite {
-  constructor(bounds) {
+  constructor(bounds, onBounce) {
     super(texture, 48, 48)
     this.pivot = { x: 24, y: 24 }
     this.frame.x = math.rand(4)
     this.vel = new Vec()
     this.acc = new Vec()
     this.bounds = bounds
+    this.onBounce = onBounce
+    this.time = 0
   }
 
   update(dt) {
@@ -27,9 +29,12 @@ class CrashTestDummy extends TileSprite {
 
     physics.integrate(this, dt)
 
+    this.time += dt
+
     // Bounce off the walls
     if (pos.x < 0 || pos.x > bounds.w - w) {
       vel.x *= -1
+      this.onBounce(this.time)
     }
     if (pos.y < 0 || pos.y > bounds.h - h) {
       vel.y *= -1

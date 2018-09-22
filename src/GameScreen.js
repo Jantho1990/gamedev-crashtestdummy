@@ -12,9 +12,7 @@ class GameScreen extends Container {
 
     this.line = this.add(new Rect(2, game.h))
 
-    this.ctd = this.add(new CrashTestDummy(this.bounds))
-    this.ctd.pos.y = this.h / 2
-
+    
     this.timer = this.add(
       new Text('time', {
         font: '20px sans-serif',
@@ -23,6 +21,9 @@ class GameScreen extends Container {
       })
     )
     this.timer.pos.set(this.w / 2, 20)
+      
+    this.ctd = this.add(new CrashTestDummy(this.bounds, t => this.timer.text = t))
+    this.ctd.pos.y = this.h / 2
 
     this.reset()
   }
