@@ -2,6 +2,7 @@ import Texture from '../../pop/Texture';
 import TileSprite from '../../pop/TileSprite'
 import Vec from '../../pop/utils/Vec'
 import math from '../../pop/utils/math'
+import physics from '../../pop/utils/physics'
 
 const texture = new Texture('res/img/crash_test.png')
 
@@ -13,29 +14,18 @@ class CrashTestDummy extends TileSprite {
     this.vel = new Vec()
     this.acc = new Vec()
     this.bounds = bounds
-    this.time = 0
   }
 
   update(dt) {
     const { pos, vel, bounds, w, h, acc } = this
 
-    const ACCELERATION = 200
-    acc.x += ACCELERATION
+    // Jetpack!
+    physics.applyForce(this, { x: 200, y: 0 })
 
-    vel.x += acc.x * dt
-    vel.y += acc.y * dt
+    // Gravity
+    physics.applyForce(this, { x: 0, y: 300 })
 
-    // Move in the direction of the path
-    pos.x += vel.x * dt
-    pos.y += vel.y * dt
-
-    // Print out what we expect from displacement test
-    this.time += dt
-    if (this.time >= 2 && !this.prnt) {
-      const expectedPos = 0.5 * ACCELERATION * this.time * this.time
-      console.log(this.time, pos.x, expectedPos, expectedPos - pos.x)
-      this.prnt = true
-    }
+    physics.integrate(this, dt)
 
     // Bounce off the walls
     if (pos.x < 0 || pos.x > bounds.w - w) {
@@ -46,8 +36,6 @@ class CrashTestDummy extends TileSprite {
     }
 
     this.rotation += vel.x * 0.05 * dt
-
-    acc.set(0, 0)
   }
 }
 
