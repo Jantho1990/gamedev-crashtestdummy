@@ -34,7 +34,10 @@ class CrashTestDummy extends TileSprite {
       .multiply(-1)
       .normalize()
       .multiply(200)
+    const gravity = { x: 0, y: 500 }
+
     physics.applyForce(this, friction)
+    physics.applyForce(this, gravity)
 
     physics.integrate(this, dt)
 
