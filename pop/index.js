@@ -1,6 +1,7 @@
 import Camera from './Camera'
 import Container from './Container'
 import Game from './Game'
+import Rect from './Rect'
 import Sprite from './Sprite'
 import Text from './Text'
 import Texture from './Texture'
@@ -25,6 +26,7 @@ export default {
     KeyControls,
     MouseControls,
     math,
+    Rect,
     Sprite,
     State,
     Text,
