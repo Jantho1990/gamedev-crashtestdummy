@@ -7,28 +7,36 @@ import physics from '../../pop/utils/physics'
 const texture = new Texture('res/img/crash_test.png')
 
 class CrashTestDummy extends TileSprite {
-  constructor(bounds, friction = 0.96) {
+  constructor(bounds) {
     super(texture, 48, 48)
     this.pivot = { x: 24, y: 24 }
     this.frame.x = math.rand(4)
     this.vel = new Vec()
     this.acc = new Vec()
     this.bounds = bounds
-    this.fling = false
-    this.friction = friction
   }
 
   update(dt) {
-    const { pos, vel, bounds, w, h, friction } = this
+    const { pos, vel, bounds, w, h } = this
 
-    if (!this.fling) {
-      physics.applyImpulse(this, { x: 800, y: 0 }, dt)
-      this.fling = true
+    if (math.randOneIn(130)) {
+      physics.applyImpulse(
+        this,
+        {
+          x: math.rand(-300, 300),
+          y: math.rand(-300, 300)
+        },
+        dt
+      )
     }
 
-    physics.integrate(this, dt)
+    const friction = vel.clone()
+      .multiply(-1)
+      .normalize()
+      .multiply(200)
+    physics.applyForce(this, friction)
 
-    vel.multiply(friction)
+    physics.integrate(this, dt)
 
     // Bounce off the walls
     if (pos.x < 0 || pos.x > bounds.w - w) {

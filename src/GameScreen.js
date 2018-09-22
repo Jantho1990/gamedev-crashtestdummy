@@ -11,9 +11,8 @@ class GameScreen extends Container {
     this.bounds = { x: 0, y: 0, w: this.w, h: this.h }
 
     for (let i = 0; i < 30; i++) {
-      const friction = (i / 29) * 0.19 + 0.8
-      const ctd = this.add(new CrashTestDummy(this.bounds, friction))
-      ctd.pos.set(0, math.rand(this.h - 48))
+      const ctd = this.add(new CrashTestDummy(this.bounds))
+      ctd.pos.set(this.w / 2, this.h / 2)
     }
   }
 }
