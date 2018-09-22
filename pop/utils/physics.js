@@ -28,6 +28,7 @@ function speed({ vel }) {
 
 export default {
   applyForce,
+  applyImpulse,
   integrate,
   speed
 }
