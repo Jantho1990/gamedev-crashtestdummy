@@ -11,7 +11,7 @@ class GameScreen extends Container {
     this.bounds = { x: 0, y: 0, w: this.w, h: this.h }
 
     for (let i = 0; i < 30; i++) {
-      const ctd = this.add(new CrashTestDummy(this.bounds))
+      const ctd = this.add(new CrashTestDummy(this.bounds, this.controls))
       ctd.pos.set(this.w / 2, this.h / 2)
     }
   }

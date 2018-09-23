@@ -7,7 +7,7 @@ import physics from '../../pop/utils/physics'
 const texture = new Texture('res/img/crash_test.png')
 
 class CrashTestDummy extends TileSprite {
-  constructor(bounds) {
+  constructor(bounds, controls) {
     super(texture, 48, 48)
     this.pivot = { x: 24, y: 24 }
     this.frame.x = math.rand(4)
@@ -18,10 +18,11 @@ class CrashTestDummy extends TileSprite {
     this.clockwise = math.randOneIn(2)
 
     this.bounds = bounds
+    this.controls = controls
   }
 
   update(dt) {
-    const { pos, dir, speed, bounds, w, h } = this
+    const { pos, dir, speed, bounds, w, h, controls } = this
 
     this.rotation = this.dir + Math.PI / 4
 
@@ -30,7 +31,7 @@ class CrashTestDummy extends TileSprite {
       y: Math.sin(dir) * speed * dt
     })
 
-    this.dir += 0.8 * dt * (this.clockwise ? -1 : 1)
+    this.dir += 0.8 * dt * controls.x
 
     if (math.randOneIn(30)) {
       this.clockwise = !this.clockwise
