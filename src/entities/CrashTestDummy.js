@@ -15,8 +15,7 @@ class CrashTestDummy extends TileSprite {
     this.dir = math.randf(Math.PI * 2)
     this.speed = math.rand(50, 150)
 
-    this.vel = new Vec()
-    this.acc = new Vec()
+    this.clockwise = math.randOneIn(2)
 
     this.bounds = bounds
   }
@@ -24,37 +23,24 @@ class CrashTestDummy extends TileSprite {
   update(dt) {
     const { pos, dir, speed, bounds, w, h } = this
 
-    /* if (math.randOneIn(130)) {
-      physics.applyImpulse(
-        this,
-        {
-          x: math.rand(-300, 300),
-          y: math.rand(-300, 300)
-        },
-        dt
-      )
-    } */
-
     this.rotation = this.dir + Math.PI / 4
+
     pos.add({
       x: Math.cos(dir) * speed * dt,
       y: Math.sin(dir) * speed * dt
     })
 
-    // physics.applyFriction(this, 100);
-    
-    // const gravity = { x: 0, y: 500 }
-    // physics.applyForce(this, gravity)
-    
-    physics.integratePos(this, dt);
+    this.dir += 0.8 * dt * (this.clockwise ? -1 : 1)
+
+    if (math.randOneIn(30)) {
+      this.clockwise = !this.clockwise
+    }
 
     // Bounce off the walls
     if (pos.x < 0 || pos.x > bounds.w - w) {
-      // vel.x *= -1
       this.dir = -this.dir + Math.PI
     }
     if (pos.y < 0 || pos.y > bounds.h - h) {
-      // vel.y *= -1
       this.dir = -this.dir
     }
   }
